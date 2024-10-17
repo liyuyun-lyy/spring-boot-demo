@@ -10,6 +10,8 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		int a = 1;
 		a = a;
+		int b = 1;
+		b = b;
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
