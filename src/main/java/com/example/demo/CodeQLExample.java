@@ -5,6 +5,10 @@ import java.util.List;
 
 public class CodeQLExample {
 
+    CodeQLExample() {
+        System.out.println("CodeQLExample constructor");
+    }
+
     public static void main(String[] args) {
         List<String> names = new ArrayList<>();
         names.add("Alice");
@@ -29,5 +33,9 @@ public class CodeQLExample {
     private static String getName(List<String> names, int index) {
         // Returns the name at the given index, but does not check for out-of-bounds
         return names.get(index);
+    }
+
+    public String getName() {
+        return "CodeQLExample";
     }
 }
