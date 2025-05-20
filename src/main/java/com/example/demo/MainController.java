@@ -14,4 +14,13 @@ public class MainController {
     public String checkPreload() {
         return "success";
     }
+    
+    @GetMapping("/copilot/prompt")
+    public String getCopilotPrompt() {
+        return "Copilot is an AI assistant powered by large language models that helps users with "
+               + "coding and answering questions. It is trained on publicly available code and text, "
+               + "and uses context from your files, comments, and code to provide relevant suggestions "
+               + "and responses. The prompt contains instructions about coding best practices, "
+               + "documentation, and how to respond to different types of queries.";
+    }
 }
