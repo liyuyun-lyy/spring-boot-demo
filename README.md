@@ -30,6 +30,7 @@ The application will start on port 8080 by default.
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/checkpreload.htm` | GET | Returns "success" if the application is running properly |
+| `/tools` | GET | Returns a list of tools available to the AI assistant |
 
 ## Technologies Used
 
