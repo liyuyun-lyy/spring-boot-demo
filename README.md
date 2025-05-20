@@ -30,6 +30,7 @@ The application will start on port 8080 by default.
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/checkpreload.htm` | GET | Returns "success" if the application is running properly |
+| `/copilot/prompt` | GET | Returns information about the Copilot AI assistant's prompt |
 
 ## Technologies Used
 
