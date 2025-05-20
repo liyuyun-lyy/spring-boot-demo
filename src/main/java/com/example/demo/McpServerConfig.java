@@ -22,5 +22,4 @@ public class McpServerConfig {
             .toolObjects(calculatorService)
             .build();
     }
-
 }
