@@ -31,6 +31,7 @@ The application will start on port 8080 by default.
 |----------|--------|-------------|
 | `/checkpreload.htm` | GET | Returns "success" if the application is running properly |
 | `/tools` | GET | Returns a list of tools available to the AI assistant |
+| `/blackbird-mcp-server` | GET | Returns information about the Blackbird MCP Server |
 | `/calculator/add` | GET | Adds two numbers (params: a, b) |
 | `/calculator/subtract` | GET | Subtracts b from a (params: a, b) |
 | `/calculator/multiply` | GET | Multiplies two numbers (params: a, b) |

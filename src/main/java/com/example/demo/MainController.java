@@ -18,6 +18,18 @@ public class MainController {
         return "success";
     }
     
+    @GetMapping("/blackbird-mcp-server")
+    public String getBlackbirdMcpServerInfo() {
+        return "Blackbird MCP Server (Management Control Protocol Server) 是一个高性能的服务管理系统，提供以下功能：\n\n"
+            + "1. 集中式服务监控与管理\n"
+            + "2. 自动化部署与配置\n"
+            + "3. 资源使用监控与优化\n"
+            + "4. 负载均衡与高可用性保障\n"
+            + "5. 安全访问控制与权限管理\n\n"
+            + "该系统采用分布式架构，支持多种云平台，并提供RESTful API接口供第三方系统集成。\n"
+            + "基于Spring Boot框架开发，具有高扩展性和可维护性。";
+    }
+    
     @GetMapping("/tools")
     public List<String> listTools() {
         return Arrays.asList(
