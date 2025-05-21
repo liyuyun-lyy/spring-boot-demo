@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,4 +30,13 @@ class DemoApplicationTests {
 			.andExpect(jsonPath("$.length()").value(26));
 	}
 
+	@Test
+	void promptEndpointShouldReturnSystemPrompt() throws Exception {
+		mockMvc.perform(get("/prompt"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType("text/plain;charset=UTF-8"))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("System Prompt for AI Assistant")))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Available Functions/Tools")))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Multi-Controlling Persona (MCP) Guidelines")));
+	}
 }
