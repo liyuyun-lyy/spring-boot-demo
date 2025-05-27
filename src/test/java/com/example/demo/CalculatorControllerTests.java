@@ -61,4 +61,20 @@ class CalculatorControllerTests {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Cannot divide by zero"));
     }
+
+    @Test
+    void addShouldReturnBadRequestWhenParameterMissing() throws Exception {
+        // missing parameter b
+        mockMvc.perform(get("/calculator/add")
+                .param("a", "5"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void addShouldReturnBadRequestWhenParameterIsNotANumber() throws Exception {
+        mockMvc.perform(get("/calculator/add")
+                .param("a", "foo")
+                .param("b", "3"))
+                .andExpect(status().isBadRequest());
+    }
 }

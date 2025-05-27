@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,5 +23,13 @@ class MainControllerTests {
         mockMvc.perform(get("/checkpreload.htm"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("success"));
+    }
+
+    @Test
+    void toolsEndpointShouldReturnExpectedContent() throws Exception {
+        mockMvc.perform(get("/tools"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", org.hamcrest.Matchers.hasSize(26)))
+                .andExpect(jsonPath("$[0]").value("bash - Run commands in a bash shell"));
     }
 }
