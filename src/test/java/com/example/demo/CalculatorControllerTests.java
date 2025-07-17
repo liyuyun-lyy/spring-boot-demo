@@ -25,4 +25,40 @@ class CalculatorControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string("8.0"));
     }
+
+    @Test
+    void subtractShouldReturnCorrectResult() throws Exception {
+        mockMvc.perform(get("/calculator/subtract")
+                .param("a", "5")
+                .param("b", "3"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("2.0"));
+    }
+
+    @Test
+    void multiplyShouldReturnCorrectResult() throws Exception {
+        mockMvc.perform(get("/calculator/multiply")
+                .param("a", "5")
+                .param("b", "3"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("15.0"));
+    }
+
+    @Test
+    void divideShouldReturnCorrectResult() throws Exception {
+        mockMvc.perform(get("/calculator/divide")
+                .param("a", "6")
+                .param("b", "3"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("2.0"));
+    }
+
+    @Test
+    void divideByZeroShouldReturnBadRequest() throws Exception {
+        mockMvc.perform(get("/calculator/divide")
+                .param("a", "5")
+                .param("b", "0"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Cannot divide by zero"));
+    }
 }
