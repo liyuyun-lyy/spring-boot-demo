@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.12</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.taobao</groupId>
+		<artifactId>parent</artifactId>
+		<version>2.0.0</version>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
@@ -14,9 +13,36 @@
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+		<spring-boot.version>3.2.0</spring-boot.version>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-mcp-server-spring-boot-starter</artifactId>
+				<version>1.0.0-M6</version>
+			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>com.alibaba.cloud.ai</groupId>-->
+<!--				<artifactId>spring-ai-alibaba-starter</artifactId>-->
+<!--				<version>1.0.0-M6.1</version>-->
+<!--			</dependency>-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
+	<dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-text</artifactId>
+	<version>1.12.0</version>
+	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -31,7 +57,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>5.3.20</version>
+<!--			<version>5.3.20</version>-->
 		</dependency>
 
 		<dependency>
@@ -43,6 +69,30 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-mcp-server-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
+			<version>1.0.0-M6</version>
+		</dependency>
+		<dependency>
+			<groupId>io.modelcontextprotocol.sdk</groupId>
+			<artifactId>mcp</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.modelcontextprotocol.sdk</groupId>
+			<artifactId>mcp-spring-webmvc</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.alibaba.cloud.ai</groupId>-->
+<!--			<artifactId>spring-ai-alibaba-starter</artifactId>-->
+<!--		</dependency>-->
+
 
 	</dependencies>
 
@@ -51,6 +101,59 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!-- 版本请根据需要自行选择，强烈推荐使用3.X版本，版本查询链接参考下方👇 -->
+				<!-- https://artlab.alibaba-inc.com/GAResult?GroupId=org.apache.maven.plugins&Artifact=maven-surefire-plugin -->
+				<version>3.2.1</version>
+				<configuration>
+					<!-- 如果使用2.X版本，此处需要改为`${argLine}`并且在Idea中会标红，这是正常现象 -->
+					<!-- 如果有其他参数，可以放在argLine后方 -->
+					<!-- ⚠️此处的argLine需要与jacoco插件中的propertyName保持完全一致！ -->
+					<argLine>@{argLine}</argLine>
+					<!-- 如果有其他单测相关的配置可以配置在下方 -->
+				</configuration>
+			</plugin>
+			<!-- 配置Jacoco插件，用于生成覆盖率报告 -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<!-- 版本请根据需要自行选择，推荐使用最新版，版本查询链接参考下方👇 -->
+				<!-- https://artlab.alibaba-inc.com/GAResult?GroupId=org.jacoco&Artifact=jacoco -->
+				<version>0.8.10</version>
+				<configuration>
+					<!-- ⚠️一般来说不需要配置propertyName这个参数，因为默认值就是argLine -->
+					<!-- ⚠️除非需要改成其他的参数，否则在绝大多数情况下不建议配置这个参数 -->
+					<!-- 下面这行指定jacoco注入agent时使用的参数 -->
+					<!-- <propertyName>argLine</propertyName> -->
+					<!-- 使用excludes标签配置想要从覆盖率报告中排除的类或文件夹 -->
+					<excludes>
+						<!-- 此处使用的是Glob语法，可参考下方👇的链接 -->
+						<!-- https://code.visualstudio.com/docs/editor/glob-patterns -->
+						<exclude>**/model/*DTO.*</exclude>
+						<!-- https://globster.xyz/ -->
+						<!-- 上方👆是一个可以用来测试Glob语法的网址 -->
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<!-- ✅注入Jacoco在线模式Agent，用于动态代码插桩及生成覆盖率元数据 -->
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<!-- ✅读取覆盖率元数据并生成覆盖率报告，线上插件会读取此流程生成的覆盖率报告并上传 -->
+							<goal>report</goal>
+							<goal>report-aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
