@@ -108,5 +108,5 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_env: |
             anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-            API_URL: https://api.moonshot.cn/anthropic
+            ANTHROPIC_BASE_URL: https://api.moonshot.cn/anthropic
             GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.CLAUDE_GITHUB_TOKEN }}
