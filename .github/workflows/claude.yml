@@ -37,3 +37,10 @@ jobs:
           claude_env: |
             anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
             ANTHROPIC_BASE_URL: https://api.moonshot.cn/anthropic
+          allowed_tools: |
+            Bash(npm install)
+            Bash(npm run test)
+            Edit
+            Replace
+            NotebookEditCell
+            Bash
